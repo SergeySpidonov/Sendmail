@@ -8,7 +8,7 @@ _values = dotenv_values()
 
 ADDR_FROM = _values.get("addr_from")
 ADDR_TO = _values.get("addr_to")
-PASSWORD = str('dEPKLBefCcCkgFFb66h8M')
+PASSWORD = _values.get("password")
 FILEPATH = _values.get("FILEPATH")
 
 DB_CONN = dotenv_values().get('DB_CONN')
