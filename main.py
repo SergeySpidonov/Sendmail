@@ -3,6 +3,7 @@ from dotenv import dotenv_values
 import sqlalchemy
 import os
 from mail import send_mail
+import tempfile
 
 _values = dotenv_values()
 
@@ -18,9 +19,13 @@ PATH = dotenv_values().get('FILEPATH')
 
 for root, dirs, files in os.walk(os.path.join(PATH, 'KKD')):
     for filename in files:
-        df = pd.read_sql(sql=filename, con=conn)
-        csv_path = os.path.join(PATH, 'csv', filename.replace('.sql', '.csv'))
-        csv_list.append(csv_path)
-        df.to_csv(path=os.path)
+        sql = ''
+        with open(filename, 'r') as sql_file:
+            for line in sql_file:
+                sql += line
+            df = pd.read_sql(sql=sql, con=conn)
+            csv_path = os.path.join(PATH, 'csv', filename.replace('.sql', '.csv'))
+            csv_list.append(csv_path)
+            df.to_csv(path=os.path)
 
 send_mail(addr_to='s.spiridonov@rosenergo.com', subject='Postgres revise', text='test', filepath=csv_list)
