@@ -6,13 +6,18 @@ from email.mime.multipart import MIMEMultipart      # Многокомпонен
 from email.mime.base import MIMEBase                # Текст/HTML
 import os
 from dotenv import dotenv_values
+import socks
 _values = dotenv_values()
 
 addr_from = _values.get("addr_from")                # Адресат
 addr_to   = _values.get("addr_to")                   # Получатель
 password  = _values.get("password")                             # Пароль
 FILEPATH = _values.get("FILEPATH")
+proxy_host = _values.get("PROXY_HOST")
 
+
+
+socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS4, proxy_host=proxy_host, proxy_port=3128)
 
 def send_mail(addr_to='opr@rosenergo.com', subject=None, text=None, filepath=None):
     msg = MIMEMultipart()  # Создаем сообщение

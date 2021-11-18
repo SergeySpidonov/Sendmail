@@ -5,3 +5,4 @@ dependencies:
   - python-dotenv==0.19.2
   - sqlalchemy==1.4.27
   - psycopg2==2.9.2
+  - PySocks==1.7.1
