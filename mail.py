@@ -18,6 +18,8 @@ proxy_host = _values.get("PROXY_HOST")
 
 
 socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS4, proxy_host=proxy_host, proxy_port=3128)
+socks.wrap_module(smtplib)
+
 
 def send_mail(addr_to='opr@rosenergo.com', subject=None, text=None, filepath=None):
     msg = MIMEMultipart()  # Создаем сообщение
