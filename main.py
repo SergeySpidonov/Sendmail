@@ -23,4 +23,4 @@ for root, dirs, files in os.walk(os.path.join(PATH, 'KKD')):
         csv_list.append(csv_path)
         df.to_csv(path=os.path)
 
-send_mail(addr_to='s.spiridonov@rosenergo.com', subject='тест', text='test', filepath=csv_list)
+send_mail(addr_to='s.spiridonov@rosenergo.com', subject='Postgres revise', text='test', filepath=csv_list)
