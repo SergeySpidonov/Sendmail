@@ -20,7 +20,7 @@ PATH = dotenv_values().get('FILEPATH')
 for root, dirs, files in os.walk(os.path.join(PATH, 'KKD')):
     for filename in files:
         sql = ''
-        with open(filename, 'r') as sql_file:
+        with open(os.path.join(PATH, filename), 'r') as sql_file:
             for line in sql_file:
                 sql += line
             df = pd.read_sql(sql=sql, con=conn)
