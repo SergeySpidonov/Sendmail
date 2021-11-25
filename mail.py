@@ -16,7 +16,7 @@ FILEPATH = _values.get("FILEPATH")
 proxy_host = _values.get("PROXY_HOST")
 
 
-def send_mail(addr_to='opr@rosenergo.com', subject=None, text=None, filepath=None):
+def send_mail(addr_to=None, subject=None, text=None, filepath=None, addr_from=None):
     msg = MIMEMultipart()  # Создаем сообщение
     msg['From'] = addr_from  # Адресат
     msg['To'] = addr_to  # Получатель
@@ -47,7 +47,16 @@ def send_mail(addr_to='opr@rosenergo.com', subject=None, text=None, filepath=Non
         msg.attach(file)
 
 
-    server = smtplib.SMTP_SSL('smtp.mail.ru', 465)
-    server.login(addr_from, password)
-    server.send_message(msg)
-    server.quit()
+    s = smtplib.SMTP('smtp.rosenergo.com')
+    for addr in addr_to:
+        msg['To'] = addr
+        try:
+            s.send_message(msg)
+        except smtplib.SMTPRecipientsRefused:
+            # игнорируем, если почта косячная
+            pass
+        # библиотека накапливает адресатов внутри, надо очищать
+        del msg['To']
+        del msg['Cc']
+    s.quit()
+
