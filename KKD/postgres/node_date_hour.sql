@@ -1,5 +1,5 @@
 select
-	DATE_TRUNC('mon', target_date) as MONTH,
+	date_trunc('mon', target_date) as MONTH,
 	SUM(node_pk_fk) as node_pk_fk,
 	SUM("hour") as hour,
 	sum(opf_v_nominal) as opf_v_nominal,
