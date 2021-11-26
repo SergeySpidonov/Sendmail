@@ -1,5 +1,5 @@
 select
-	DATE_TRUNC('mon', target_date),
+	DATE_TRUNC('mon', target_date) AS MONTH,
 	SUM(COALESCE(pz_pk,0)) as pz_pk,
 	SUM(COALESCE(prc_con_plan,0)) as prc_con_plan,
 	SUM(COALESCE(prc_con_plan_min,0)) as prc_con_plan_min,
