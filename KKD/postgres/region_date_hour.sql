@@ -1,5 +1,5 @@
 select
-	date_trunc('mon', target_date) as MONTH,
+	date_trunc('mon', target_date) ::DATEas month,
 	STRING_AGG(region_pk_fk, '|') as region_pk_fk,
 	SUM(hour) as hour,
 	SUM(is_peak_hour) as is_peak_hour,

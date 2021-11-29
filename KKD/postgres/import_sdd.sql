@@ -1,5 +1,5 @@
 select
-	date_trunc('mon', target_date) as MONTH,
+	date_trunc('mon', target_date)::DATE as MONTH,
 	SUM(price_zone_code) as price_zone_code,
 	SUM(hour) as hour,
 	SUM(source_type) as source_type,

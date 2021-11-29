@@ -1,5 +1,5 @@
 select
-	date_trunc('mon', target_date) as MONTH,
+	date_trunc('mon', target_date)::DATE as month,
 	STRING_AGG(region_pk_fk, '|') as region_pk_fk,
 	SUM(price_con_plan) AS price_con_plan,
 	count(*) as count_rows

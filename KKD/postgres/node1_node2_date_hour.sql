@@ -1,5 +1,5 @@
 select
-	date_trunc('mon', target_date),
+	date_trunc('mon', target_date)::DATE as month,
 	SUM(node1_pk_fk) as node1_pk_fk,
 	SUM(node2_pk_fk) as node2_pk_fk,
 	SUM(hour) as hour,

@@ -1,5 +1,5 @@
 select
-	date_trunc('mon', target_date) as MONTH,
+	date_trunc('mon', target_date)::DATE as month,
 	SUM(pz) as pz,
 	SUM(hour) as hour,
 	SUM(direction) as direction,
