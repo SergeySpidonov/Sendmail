@@ -27,6 +27,6 @@ for root, dirs, files in os.walk(os.path.join(PATH, 'KKD')):
             df = pd.read_sql(sql=sql, con=conn)
             csv_path = os.path.join(PATH, 'csv', filename.replace('.sql', '.csv'))
             csv_list.append(csv_path)
-            df.to_csv(csv_path, index=False)
+            df.to_csv(csv_path, index=False, sep=';')
 
 send_mail(addr_to=ADDR_TO, subject='Postgres revise', text='test', filepath=csv_list, addr_from='noreply@rosenergo.com')
