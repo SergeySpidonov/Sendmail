@@ -16,8 +16,9 @@ FILEPATH = _values.get("FILEPATH")
 DB_CONN = dotenv_values().get('DB_CONN')
 conn = sqlalchemy.create_engine(DB_CONN)
 csv_list = []
-PATH = dotenv_values().get('FILEPATH')
-with zipfile.ZipFile(os.path.join(PATH, 'csv', 'postgres_revise.zip'), 'w') as zip:
+PATH = _values.get('FILEPATH')
+zip_path = os.path.join(PATH, 'csv', 'postgres_revise.zip')
+with zipfile.ZipFile(zip_path, 'w') as zip:
     for root, dirs, files in os.walk(os.path.join(PATH, 'KKD', DB)):
         for filename in files:
             sql = ''
@@ -28,7 +29,7 @@ with zipfile.ZipFile(os.path.join(PATH, 'csv', 'postgres_revise.zip'), 'w') as z
                 csv_path = os.path.join(PATH, 'csv', filename.replace('.sql', '.csv'))
                 csv_list.append(csv_path)
                 df.to_csv(csv_path, index=False, sep=';')
-                zip.write(csv_path)
+                zip.write(csv_path, arcname=filename)
 
-send_mail(addr_to=ADDR_TO, subject='Postgres revise', text='test', filepath=csv_list,
+send_mail(addr_to=ADDR_TO, subject='Postgres revise', text='test', filepath=zip_path,
           addr_from='vm-dras-publish-red@rosenergo.com')
