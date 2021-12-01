@@ -8,9 +8,8 @@ import tempfile
 _values = dotenv_values()
 DB = _values.get("DB")
 
-ADDR_FROM = _values.get("addr_from")
+
 ADDR_TO = _values.get("addr_to")
-PASSWORD = _values.get("password")
 FILEPATH = _values.get("FILEPATH")
 
 DB_CONN = dotenv_values().get('DB_CONN')
@@ -18,7 +17,7 @@ conn = sqlalchemy.create_engine(DB_CONN)
 csv_list = []
 PATH = dotenv_values().get('FILEPATH')
 
-for root, dirs, files in os.walk(os.path.join(PATH, 'KKD')):
+for root, dirs, files in os.walk(os.path.join(PATH, 'KKD', DB)):
     for filename in files:
         sql = ''
         with open(os.path.join(PATH, 'KKD', DB, filename), 'r') as sql_file:
@@ -29,4 +28,5 @@ for root, dirs, files in os.walk(os.path.join(PATH, 'KKD')):
             csv_list.append(csv_path)
             df.to_csv(csv_path, index=False, sep=';')
 
-send_mail(addr_to=ADDR_TO, subject='Postgres revise', text='test', filepath=csv_list, addr_from='noreply@rosenergo.com')
+send_mail(addr_to=ADDR_TO, subject='Postgres revise', text='test', filepath=csv_list,
+          addr_from='vm-dras-publish-red@rosenergo.com')

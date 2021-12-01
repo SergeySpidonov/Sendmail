@@ -23,8 +23,6 @@ def send_mail(addr_to=None, subject=None, text=None, filepath=None, addr_from=No
     msg['Subject'] = subject
     body = text
     msg.attach(MIMEText(body, 'plain'))
-    # TODO сделать функцию для прикрепления приложения к письму дублируется код. Сейчас сталкиваюсь с проблемой
-    # TODO аутентификации
     if type(filepath) == list:# Добавляем в сообщение текст
         for file in filepath:
             filename = os.path.basename(file)
@@ -33,7 +31,6 @@ def send_mail(addr_to=None, subject=None, text=None, filepath=None, addr_from=No
             with open(file, 'rb') as fp:
                 file = MIMEBase(maintype, subtype)  # Используем общий MIME-тип
                 file.set_payload(fp.read())  # Добавляем содержимое общего типа (полезную нагрузку)
-                fp.close()
             encoders.encode_base64(file)
             file.add_header('Content-Disposition', 'attachment', filename=filename) # Добавляем заголовки
             msg.attach(file)
@@ -41,11 +38,12 @@ def send_mail(addr_to=None, subject=None, text=None, filepath=None, addr_from=No
         with open(filepath, 'rb') as fp:
             file = MIMEBase(maintype, subtype)  # Используем общий MIME-тип
             file.set_payload(fp.read())  # Добавляем содержимое общего типа (полезную нагрузку)
-            fp.close()
         encoders.encode_base64(file)
         file.add_header('Content-Disposition', 'attachment', filename=filename)  # Добавляем заголовки
         msg.attach(file)
 
+    if isinstance(addr_to, str):
+        addr_to = [addr_to, ]
 
     s = smtplib.SMTP('smtp.rosenergo.com')
     for addr in addr_to:
