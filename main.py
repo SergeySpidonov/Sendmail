@@ -27,7 +27,8 @@ with zipfile.ZipFile(zip_path, 'w') as zip:
                 for line in sql_file:
                     sql += line
                 df = pd.read_sql(sql=sql, con=conn)
-                csv_path = os.path.join(PATH, 'csv', filename.replace('.sql', '.csv'))
+                csv_name = filename.replace('.sql', '.csv')
+                csv_path = os.path.join(PATH, 'csv', csv_name)
                 csv_list.append(csv_path)
                 df.to_csv(csv_path, index=False, sep=';')
                 zip.write(csv_path, arcname=filename)

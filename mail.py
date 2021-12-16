@@ -21,7 +21,7 @@ def send_mail(addr_to=None, subject=None, text=None, filepath=None, addr_from=No
     body = text
     msg.attach(MIMEText(body, 'plain'))
     if filepath:
-        if isinstance(filepath, list):
+        if isinstance(filepath, str):
             filepath = [filepath, ]
         for file in filepath:
             with open(file, 'rb') as f:
