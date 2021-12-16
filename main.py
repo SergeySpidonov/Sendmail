@@ -31,7 +31,7 @@ with zipfile.ZipFile(zip_path, 'w') as zip:
                 csv_path = os.path.join(PATH, 'csv', csv_name)
                 csv_list.append(csv_path)
                 df.to_csv(csv_path, index=False, sep=';')
-                zip.write(csv_path, arcname=filename)
+                zip.write(csv_path, arcname=csv_name)
 
 send_mail(addr_to=ADDR_TO, subject='Postgres revise', text='test', filepath=zip_path,
           addr_from=ADDR_FROM)
