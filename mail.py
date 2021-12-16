@@ -1,10 +1,7 @@
 from email.mime.text import MIMEText
-from email import encoders
-import mimetypes
+from email.mime.application import MIMEApplication
 import smtplib                                      # Импортируем библиотеку по работе с SMTP
 from email.mime.multipart import MIMEMultipart      # Многокомпонентный объект
-from email.mime.base import MIMEBase                # Текст/HTML
-import os
 from dotenv import dotenv_values
 
 _values = dotenv_values()
@@ -23,24 +20,13 @@ def send_mail(addr_to=None, subject=None, text=None, filepath=None, addr_from=No
     msg['Subject'] = subject
     body = text
     msg.attach(MIMEText(body, 'plain'))
-    if type(filepath) == list:# Добавляем в сообщение текст
+    if filepath:
+        if isinstance(filepath, list):
+            filepath = [filepath, ]
         for file in filepath:
-            filename = os.path.basename(file)
-            ctype, encoding = mimetypes.guess_type(file)
-            maintype, subtype = ctype.split('/', 1)
-            with open(file, 'rb') as fp:
-                file = MIMEBase(maintype, subtype)  # Используем общий MIME-тип
-                file.set_payload(fp.read())  # Добавляем содержимое общего типа (полезную нагрузку)
-            encoders.encode_base64(file)
-            file.add_header('Content-Disposition', 'attachment', filename=filename) # Добавляем заголовки
-            msg.attach(file)
-    if type(filepath) == str:
-        with open(filepath, 'rb') as fp:
-            file = MIMEBase(maintype, subtype)  # Используем общий MIME-тип
-            file.set_payload(fp.read())  # Добавляем содержимое общего типа (полезную нагрузку)
-        encoders.encode_base64(file)
-        file.add_header('Content-Disposition', 'attachment', filename=filename)  # Добавляем заголовки
-        msg.attach(file)
+            with open(file, 'rb') as f:
+                # Attach the file with filename to the email
+                msg.attach(MIMEApplication(f.read(), Name='postgres_revise.zip'))
 
     if isinstance(addr_to, str):
         addr_to = [addr_to, ]

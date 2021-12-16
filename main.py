@@ -11,7 +11,8 @@ DB = _values.get("DB")
 
 
 ADDR_TO = _values.get("addr_to")
-FILEPATH = _values.get("FILEPATH")
+ADDR_FROM = _values.get("addr_from")
+WORKDIR = _values.get("FILEPATH")
 
 DB_CONN = dotenv_values().get('DB_CONN')
 conn = sqlalchemy.create_engine(DB_CONN)
@@ -32,4 +33,4 @@ with zipfile.ZipFile(zip_path, 'w') as zip:
                 zip.write(csv_path, arcname=filename)
 
 send_mail(addr_to=ADDR_TO, subject='Postgres revise', text='test', filepath=zip_path,
-          addr_from='vm-dras-publish-red@rosenergo.com')
+          addr_from=ADDR_FROM)
