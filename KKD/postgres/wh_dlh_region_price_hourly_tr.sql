@@ -1,9 +1,8 @@
 select
 	date_trunc('mon', target_date)::DATE as MONTH,
 	SUM(hour) as hour,
-	SUM(station_type) as station_type,
-	SUM(vg_ppp) as vg_ppp,
+	SUM(value) as value,
 	count(*) as count_rows
 from
-	graph.region_station_type_plan_gen_volume rstpgv
+	graph.wh_dlh_region_price_hourly_tr wdrpht
 group by 1
