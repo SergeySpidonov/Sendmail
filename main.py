@@ -33,5 +33,5 @@ with zipfile.ZipFile(zip_path, 'w') as zip:
                 df.to_csv(csv_path, index=False, sep=';')
                 zip.write(csv_path, arcname=csv_name)
 
-send_mail(addr_to=ADDR_TO, subject='Postgres revise', filepath=zip_path,
+send_mail(addr_to=ADDR_TO, subject='Postgres revise', text='ODATA checksumms', filepath=zip_path,
           addr_from=ADDR_FROM)
