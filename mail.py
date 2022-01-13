@@ -26,7 +26,7 @@ def send_mail(addr_to=None, subject=None, text=None, filepath=None, addr_from=No
         for file in filepath:
             with open(file, 'rb') as f:
                 # Attach the file with filename to the email
-                filename = filepath.split('/')[-1]
+                filename = file.split('/')[-1]
                 msg.attach(MIMEApplication(f.read(), Name=filename))
 
     if isinstance(addr_to, str):
